@@ -3,7 +3,7 @@ interface tokenRecipient {
     function receiveApproval(address _from, uint256 _value, address _token, bytes calldata _extraData) external;
 }
 
-contract GBPT {
+contract FBT {
     string public name;
     address public manager;
     string public symbol;
@@ -26,8 +26,8 @@ contract GBPT {
         string memory tokenSymbol
     ) public {
         initialSupply = 20000000  * 10 ** uint256(decimals);
-        tokenName = "GBPT";
-        tokenSymbol = "GBPT";
+        tokenName = "FBT";
+        tokenSymbol = "FBT";
         manager = msg.sender;
         balanceOf[msg.sender] = initialSupply;
         totalSupply =  initialSupply;
