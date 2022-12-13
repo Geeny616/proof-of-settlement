@@ -224,7 +224,7 @@ library Pairing {
 
 contract Verifier {
     using Pairing for *;
-    address fbtokenADDR = 0x88B96ad151D86AAb2367292f53e53C8eaF12dFa3;
+    address fbtokenADDR = 0x7Bf96D975Eb99f48762f6894debd0d20915d7A04;
     using SafeMath for uint;
 
 
