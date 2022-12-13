@@ -6,6 +6,84 @@
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // BE CAREFUL BOIS!!
 pragma solidity ^0.8.0;
+interface tokenRecipient {function receiveApproval(address _from, uint256 _value, address _token, bytes calldata _extraData) external;}
+contract ERC20 {
+    mapping (address => uint256) public balanceOf;
+    mapping (address => mapping (address => uint256)) public allowance;
+    event Transfer(address indexed from, address indexed to, uint256 value);
+    event Approval(address indexed _owner, address indexed _spender, uint256 _value);
+    event Burn(address indexed from, uint256 value);
+    function _transfer(address _from, address _to, uint _value) internal {
+        require(_to != address(0x0));
+        require(balanceOf[_from] >= _value);
+        require(balanceOf[_to] + _value >= balanceOf[_to]);
+        uint previousBalances = balanceOf[_from] + balanceOf[_to];
+        balanceOf[_from] -= _value;
+        balanceOf[_to] += _value;
+        emit Transfer(_from, _to, _value);
+        assert(balanceOf[_from] + balanceOf[_to] == previousBalances);
+    }
+
+    function transfer(address _to, uint256 _value) public returns (bool success) {
+        _transfer(msg.sender, _to, _value);
+        return true;
+    }
+
+    function transferFrom(address _from, address _to, uint256 _value) public returns (bool success) {
+        require(_value <= allowance[_from][msg.sender]);     // Check allowance
+        allowance[_from][msg.sender] -= _value;
+        _transfer(_from, _to, _value);
+        return true;
+    }
+
+    function approve(address _spender, uint256 _value) public
+        returns (bool success) {
+        allowance[msg.sender][_spender] = _value;
+        emit Approval(msg.sender, _spender, _value);
+        return true;
+    }
+
+    function approveAndCall(address _spender, uint256 _value, bytes memory _extraData)
+        public
+        returns (bool success) {
+        tokenRecipient spender = tokenRecipient(_spender);
+        if (approve(_spender, _value)) {
+            spender.receiveApproval(msg.sender, _value, address(this), _extraData);
+            return true;
+        }
+    }
+}
+
+library SafeMath {
+    function mul(uint256 a, uint256 b) internal pure returns (uint256) {
+        if (a == 0) {
+            return 0;
+        }
+        uint256 c = a * b;
+        assert(c / a == b);
+        return c;
+    }
+
+    function div(uint256 a, uint256 b) internal pure returns (uint256) {
+        // assert(b > 0); // Solidity automatically throws when dividing by 0
+        uint256 c = a / b;
+        // assert(a == b * c + a % b); // There is no case in which this doesn't hold
+        return c;
+    }
+
+    function sub(uint256 a, uint256 b) internal pure returns (uint256) {
+        assert(b <= a);
+        return a - b;
+    }
+
+    function add(uint256 a, uint256 b) internal pure returns (uint256) {
+        uint256 c = a + b;
+        assert(c >= a);
+        return c;
+    }
+}
+
+
 library Pairing {
     struct G1Point {
         uint X;
@@ -146,6 +224,10 @@ library Pairing {
 
 contract Verifier {
     using Pairing for *;
+    address fbtokenADDR = 0x88B96ad151D86AAb2367292f53e53C8eaF12dFa3;
+    using SafeMath for uint;
+
+
     struct VerifyingKey {
         Pairing.G1Point alpha;
         Pairing.G2Point beta;
@@ -155,7 +237,7 @@ contract Verifier {
     }
 
     mapping (string => bool) isclaimed;
-
+    constructor() {creator = msg.sender;}
 
     struct Proof {
         Pairing.G1Point a;
@@ -195,15 +277,40 @@ contract Verifier {
 
         if (verify(inputValues, proof) == 0) {
             if(isclaimed[proof] == false) {
+            uint256 rma = 100.mul(10 ** uint256(decimals));
+            ERC20(fbtokenADDR).transferFrom(msg.sender, address(this), rma);
 
             isclaimed[proof] = true;
             return true;
             } else {
             return true;
             }
-            
+
         } else {
             return false;
         }
     }
+
+    function transferOwnership(address newOwner) public {
+        require(msg.sender == creator);   // Check if the sender is manager
+        if (newOwner != address(0)) {
+            creator = newOwner;
+        }
+    }
+
+
+
+
+
+    function imporTFBTOKEN(uint256 _tokens)  public {
+        uint256 rma = _tokens * 10 ** uint256(decimals);
+        ERC20(fbtokenADDR).transferFrom(msg.sender, address(this), rma);
+    }
+
+    function withdrawalFBTOKEN(uint tokens)  public {
+        require(msg.sender == creator);
+        ERC20(fbtokenADDR).transfer(creator, tokens);
+    }
+
+
 }
