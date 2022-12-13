@@ -153,6 +153,10 @@ contract Verifier {
         Pairing.G2Point delta;
         Pairing.G1Point[] gamma_abc;
     }
+
+    mapping (string => bool) isclaimed;
+
+
     struct Proof {
         Pairing.G1Point a;
         Pairing.G2Point b;
@@ -190,7 +194,15 @@ contract Verifier {
         uint[] memory inputValues = new uint[](0);
 
         if (verify(inputValues, proof) == 0) {
+            if(isclaimed[proof] == false) {
+          
+            isclaimed[proof] = true;
             return true;
+            } else {
+            return true;
+            }
+
+
         } else {
             return false;
         }
