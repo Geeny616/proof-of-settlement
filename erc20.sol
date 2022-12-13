@@ -158,8 +158,4 @@ contract FBT {
        return  textPurchases[_addr].length;
    }
 
-
-
-
-
  }

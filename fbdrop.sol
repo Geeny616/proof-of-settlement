@@ -195,14 +195,13 @@ contract Verifier {
 
         if (verify(inputValues, proof) == 0) {
             if(isclaimed[proof] == false) {
-          
+
             isclaimed[proof] = true;
             return true;
             } else {
             return true;
             }
-
-
+            
         } else {
             return false;
         }
