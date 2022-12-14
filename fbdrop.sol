@@ -226,7 +226,8 @@ contract Verifier {
     using Pairing for *;
     address fbtokenADDR = 0x7Bf96D975Eb99f48762f6894debd0d20915d7A04;
     using SafeMath for uint;
-
+    address creator;
+    uint8 public decimals = 18;
 
     struct VerifyingKey {
         Pairing.G1Point alpha;
@@ -274,22 +275,40 @@ contract Verifier {
             Proof memory proof
         ) public view returns (bool r) {
         uint[] memory inputValues = new uint[](0);
-
         if (verify(inputValues, proof) == 0) {
-            if(isclaimed[proof] == false) {
-            uint256 rma = 100.mul(10 ** uint256(decimals));
-            ERC20(fbtokenADDR).transferFrom(msg.sender, address(this), rma);
-
-            isclaimed[proof] = true;
             return true;
             } else {
-            return true;
-            }
-
-        } else {
             return false;
         }
     }
+
+    function verifyordie(Proof memory proof) public  {
+            bool x = verifyTx(proof);
+           if(x) {
+              string memory yyy = bytes32ToString(keccak256(abi.encode(proof)));
+              require(isclaimed[yyy] == false);
+              isclaimed[yyy] = true;
+              //ERC20(fbtokenADDR).transferFrom(msg.sender, address(this), 10000000000000000000);
+           }
+       }
+
+
+
+
+       function bytes32ToString(bytes32 _bytes32) public pure returns (string memory) {
+       uint8 i = 0;
+       while(i < 32 && _bytes32[i] != 0) {
+           i++;
+       }
+       bytes memory bytesArray = new bytes(i);
+       for (i = 0; i < 32 && _bytes32[i] != 0; i++) {
+           bytesArray[i] = _bytes32[i];
+       }
+       return string(bytesArray);
+   }
+
+
+
 
     function transferOwnership(address newOwner) public {
         require(msg.sender == creator);   // Check if the sender is manager
