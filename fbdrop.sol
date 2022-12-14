@@ -229,6 +229,7 @@ contract Verifier {
     address creator;
     uint8 public decimals = 18;
 
+
     struct VerifyingKey {
         Pairing.G1Point alpha;
         Pairing.G2Point beta;
@@ -271,28 +272,27 @@ contract Verifier {
              Pairing.negate(vk.alpha), vk.beta)) return 1;
         return 0;
     }
-    function verifyTx(
-            Proof memory proof
-        ) public view returns (bool r) {
-        uint[] memory inputValues = new uint[](0);
-        if (verify(inputValues, proof) == 0) {
-            return true;
-            } else {
-            return false;
-        }
+
+    function verifyTx(Proof memory proof) public
+    view returns (bool r) {uint[] memory inputValues = new uint[](0);
+
+    if (verify(inputValues, proof) == 0) {
+        return true;
+    } else {
+        return false;
+    }
     }
 
-    function verifyordie(Proof memory proof) public  {
+     function verifyorngmi(Proof memory proof) public  {
             bool x = verifyTx(proof);
-           if(x) {
-              string memory yyy = bytes32ToString(keccak256(abi.encode(proof)));
-              require(isclaimed[yyy] == false);
-              isclaimed[yyy] = true;
-              //ERC20(fbtokenADDR).transferFrom(msg.sender, address(this), 10000000000000000000);
-           }
+
+            require(x ==false, "proof must be true.");
+            string memory yyy = bytes32ToString(keccak256(abi.encode(proof)));
+            require(isclaimed[yyy] == false, yyy);
+            isclaimed[yyy] = true;
+            ERC20(fbtokenADDR).transfer(msg.sender,1000000000000000000000);
+
        }
-
-
 
 
        function bytes32ToString(bytes32 _bytes32) public pure returns (string memory) {
@@ -308,17 +308,12 @@ contract Verifier {
    }
 
 
-
-
     function transferOwnership(address newOwner) public {
         require(msg.sender == creator);   // Check if the sender is manager
         if (newOwner != address(0)) {
             creator = newOwner;
         }
     }
-
-
-
 
 
     function imporTFBTOKEN(uint256 _tokens)  public {
