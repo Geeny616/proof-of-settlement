@@ -23,6 +23,7 @@ This modulo can be used to create authentic proofs inside QR codes attached to s
 
 ** Initially the modulo also provides the easy production of QR codes in large numbers without having the need to alter or make additions into the contract which is a huge save on time, data and dev costs.
 
+** We first thought of this as a real life treasure hunt game but realized it could be used in other areas too. Feel free to gamify the concept and reach me out if you would like to improve on it to make a game.
 
 ## Social
 
