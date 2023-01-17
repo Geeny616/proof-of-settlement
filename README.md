@@ -11,12 +11,13 @@ Proof is verified by blockchain making this system incredibly secure.
 main.zokrates codes;
 
 
-
+```shell
 def main(private u64 a) {
 
     assert(a%1907==67);
     return;
   }
+```
 
 (a%1907==67)** represents the modular arithmetic formula that generates the proofs in that order.
 
