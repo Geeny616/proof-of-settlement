@@ -1,6 +1,4 @@
-//
-
-#proof-of-settlement
+# proof-of-settlement
 
 proof-of-settlement is an on-chain physical state & location verifier that uses a snark.
 
