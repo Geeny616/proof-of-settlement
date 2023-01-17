@@ -8,7 +8,7 @@ The proof can only be acquired by the subject from the real settled physical loc
 
 Proof is verified by blockchain making this system incredibly secure.
 
-main.zokrates codes;
+main.zok codes;
 
 
 ```shell
