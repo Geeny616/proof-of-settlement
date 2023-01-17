@@ -20,3 +20,14 @@ def main(private u64 a) {
 (a%1907==67)** represents the modular arithmetic formula that generates the proofs in that order.
 
 This modulo can be used to create authentic proofs inside QR codes attached to swag or any object to claim tokens/NFTs.
+
+
+
+## Diğer
+
+[![Twitter](https://img.shields.io/gitter/room/nwjs/nw.js.svg)](https://twitter.com/yasinaktimur/)
+[![GitHub Issues](https://img.shields.io/badge/open%20issues-0-yellow.svg)](https://github.com/omgbbqhaxx/desearch/issues)
+
+
+-  [Twitter ](https://twitter.com/Geeny616).
+-  [Twitter ](https://twitter.com/yasinaktimur).
