@@ -23,7 +23,7 @@ This modulo can be used to create authentic proofs inside QR codes attached to s
 
 
 
-## Diğer
+## Social
 
 [![Twitter](https://img.shields.io/gitter/room/nwjs/nw.js.svg)](https://twitter.com/yasinaktimur/)
 [![GitHub Issues](https://img.shields.io/badge/open%20issues-0-yellow.svg)](https://github.com/omgbbqhaxx/desearch/issues)
