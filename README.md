@@ -25,9 +25,9 @@ This modulo can be used to create authentic proofs inside QR codes attached to s
 
 ## Social
 
-[![Twitter](https://img.shields.io/gitter/room/nwjs/nw.js.svg)](https://twitter.com/yasinaktimur/)
 [![GitHub Issues](https://img.shields.io/badge/open%20issues-0-yellow.svg)](https://github.com/omgbbqhaxx/desearch/issues)
 
+Ask the devs:
 
--  [Twitter ](https://twitter.com/NotGeeny616).
--  [Twitter ](https://twitter.com/yasinaktimur).
+-  [yasinaktimur ](https://twitter.com/NotGeeny616).
+-  [notgeeny616 ](https://twitter.com/yasinaktimur).
