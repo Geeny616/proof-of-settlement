@@ -21,6 +21,7 @@ def main(private u64 a) {
 
 This modulo can be used to create authentic proofs inside QR codes attached to swag or any object to claim tokens/NFTs.
 
+** Initially the modulo also provides the easy production of QR codes in large numbers without having the need to alter or make additions into the contract which is a huge save on time, data and dev costs.
 
 
 ## Social
@@ -29,5 +30,5 @@ This modulo can be used to create authentic proofs inside QR codes attached to s
 
 Ask the devs:
 
--  [yasinaktimur ](https://twitter.com/NotGeeny616).
--  [notgeeny616 ](https://twitter.com/yasinaktimur).
+-  [notgeeny616 ](https://twitter.com/NotGeeny616).
+-  [yasinaktimur ](https://twitter.com/yasinaktimur).
